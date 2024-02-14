@@ -8,6 +8,7 @@ html,
 body {
   overflow-x: hidden;
   font-family: 'Roboto', sans-serif;
+  background-color: $bg;
 }
 
 a {
@@ -32,4 +33,13 @@ button {
 .container {
   max-width: 1410px;
   margin: auto;
+}
+.container-full {
+  margin: auto 100px;
+}
+
+.title {
+  color: $theme;
+  font-size: 24px;
+  text-transform: uppercase;
 }

@@ -1,9 +1,12 @@
+import { FaUser } from 'react-icons/fa'
+import { GrSupport } from 'react-icons/gr'
+import { IoNotifications } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
     <header className='header' id='header'>
-      <div className='container'>
+      <div className='container-full'>
         <div className='header-wrp'>
           <div className='brand'>
             <img
@@ -15,13 +18,22 @@ export default function Header() {
           <nav className='header-nav'>
             <ul className='header-nav-menu'>
               <li>
-                <a href='#'>Support</a>
+                <a href='#'>
+                  <GrSupport />
+
+                  <span>Support</span>
+                </a>
               </li>
               <li>
-                <a href='#'>account</a>
+                <a href='#'>
+                  <FaUser /> <span>account</span>
+                </a>
               </li>
               <li>
-                <a href='#'>Nodifigation</a>
+                <a href='#'>
+                  <IoNotifications />
+                  <span>Nodifigation</span>
+                </a>
               </li>
             </ul>
             <button className='start-btn'>
