@@ -1,16 +1,12 @@
-import Title from '../components/Title.jsx'
-import MovesNav from '../components/moves/MovesNav.jsx'
-import MovesSearch from '../components/moves/MovesSearch.jsx'
+import { Outlet } from 'react-router-dom'
+import Header from '../components/Header'
 
 const HomePage = () => {
   return (
-    <main className='moves'>
-      <div className='container'>
-        <Title title={'Moves'} />
-        <MovesNav />
-        <MovesSearch />
-      </div>
-    </main>
+    <>
+      <Header />
+      <Outlet />
+    </>
   )
 }
 
