@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
+import { MdOutlineKeyboardBackspace } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 
 export default function StartForm({ isForm, setIsForm }) {
@@ -13,6 +14,7 @@ export default function StartForm({ isForm, setIsForm }) {
     if (data) {
       navigate('start')
       setIsForm(false)
+      setData(null)
     } else {
       if (reg) {
         axios
@@ -38,7 +40,13 @@ export default function StartForm({ isForm, setIsForm }) {
     <div className={`start-form-wrp ${(isForm && 'show') || ''}`}>
       <div className='start-form'>
         <div className='start-form-top'>
-          <p className='start-form-top-title'>Search for any vehicle</p>
+          {(!data && (
+            <p className='start-form-top-title'>Search for any vehicle</p>
+          )) || (
+            <button onClick={() => setData(null)}>
+              <MdOutlineKeyboardBackspace />
+            </button>
+          )}
           <button onClick={() => setIsForm(false)}>
             <IoMdClose />
           </button>
