@@ -8,7 +8,12 @@ import values from '../values'
 export default function SingleMove() {
   const { id } = useParams()
 
+  const [login, setLogin] = useState({})
   const [data, setData] = useState({})
+
+  useEffect(() => {
+    setLogin(JSON.parse(Cookies.get('login')))
+  }, [])
 
   useEffect(() => {
     axios
@@ -24,10 +29,34 @@ export default function SingleMove() {
         console.log(e.response)
       })
   }, [])
+
+  const updateMove = status => {
+    axios
+      .put(
+        `${values.base_url}/move/${id}`,
+        { status },
+        {
+          headers: {
+            token: login?.token,
+          },
+        }
+      )
+      .then(d => setData(d.data))
+      .catch(e => console.log(e))
+  }
+
   return (
     <div className='moves-single'>
       <div className='container'>
-        <Details data={data} />
+        <Details setData={setData} data={data} login={login} />
+        {login?.role === 'admin' && data?.status === 'request' && (
+          <div className='moves-single-btns'>
+            <button onClick={() => updateMove('cancel')} className='cancel'>
+              Cancel
+            </button>
+            <button onClick={() => updateMove('active')}>Aprove</button>
+          </div>
+        )}
       </div>
     </div>
   )

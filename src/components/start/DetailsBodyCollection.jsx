@@ -2,12 +2,22 @@ import moment from 'moment'
 import { useState } from 'react'
 import { FaCarSide, FaCaretDown } from 'react-icons/fa6'
 import { GoTriangleRight } from 'react-icons/go'
+import UploadPdf from '../moves/UploadPdf'
 
-export default function DetailsBodyCollection({ data, isBody }) {
+export default function DetailsBodyCollection({
+  data,
+  isBody,
+  login,
+  setData,
+}) {
   const [isShow, setIsShow] = useState(false)
+  const [pdf, setPdf] = useState(null)
 
   return (
     <div className='details-body'>
+      {pdf && (
+        <UploadPdf setData={setData} login={login} setPdf={setPdf} pdf={pdf} />
+      )}
       {isBody && (
         <div className='details-body-top'>
           <div className='details-body-top-left'>
@@ -26,12 +36,53 @@ export default function DetailsBodyCollection({ data, isBody }) {
               </strong>
             </h2>
           </div>
-          <div className='details-body-top-right'>
-            <button disabled={(!data?.poc && true) || false} className='btn'>
-              View POC
-            </button>
-            <button disabled={(!data?.pod && true) || false}>View POD</button>
-          </div>
+          {(login?.role === 'admin' && (
+            <div className='details-body-top-right'>
+              <button
+                onClick={() => {
+                  if (data?.poc) {
+                    window.open(data?.poc, '_blank')
+                  } else {
+                    setPdf('POC')
+                  }
+                }}
+                className='btn'
+              >
+                {(data?.poc && 'View') || 'Upload'} POC
+              </button>
+              <button
+                onClick={() => {
+                  if (data?.pod) {
+                    window.open(data?.pod, '_blank')
+                  } else {
+                    setPdf('POD')
+                  }
+                }}
+              >
+                {(data?.pod && 'View') || 'Upload'} POD
+              </button>
+            </div>
+          )) || (
+            <div className='details-body-top-right'>
+              <button
+                onClick={() => {
+                  window.open(data?.poc, '_blank')
+                }}
+                disabled={(!data?.poc && true) || false}
+                className='btn'
+              >
+                View POC
+              </button>
+              <button
+                onClick={() => {
+                  window.open(data?.pod, '_blank')
+                }}
+                disabled={(!data?.pod && true) || false}
+              >
+                View POD
+              </button>
+            </div>
+          )}
         </div>
       )}
       <div
